@@ -1,0 +1,10 @@
+{
+ "namespace": "com.maia.springkafkastreamkotlin.repository",
+ "type": "record",
+ "name": "StockQuote",
+ "fields": [
+   { "name": "symbol", "type": "string"},
+   { "name": "tradeValue", "type": "double"},
+   { "name": "tradeTime", "type": ["null", "long"], "default": null}
+ ]
+}
