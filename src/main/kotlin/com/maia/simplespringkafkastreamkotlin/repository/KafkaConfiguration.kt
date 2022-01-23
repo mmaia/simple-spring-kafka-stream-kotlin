@@ -10,15 +10,15 @@ import org.springframework.kafka.core.KafkaAdmin.NewTopics
 @EnableKafka
 class KafkaConfiguration {
 
-    // TOPICS
-    val quotesTopic = "stock-quotes-topic"
-    val leveragePriceTopic = "leverage-prices-topic"
-
     @Bean
-    fun appTopics(): NewTopics? {
+    fun appTopics(): NewTopics {
         return NewTopics(
-            TopicBuilder.name(quotesTopic).build(),
-            TopicBuilder.name(leveragePriceTopic).compact().build(),
+            TopicBuilder.name(STOCK_QUOTES_TOPIC).build(),
+            TopicBuilder.name(LEVERAGE_PRICES_TOPIC).compact().build(),
         )
     }
 }
+
+// constants for topics
+const val STOCK_QUOTES_TOPIC = "stock-quotes-topic"
+const val LEVERAGE_PRICES_TOPIC = "leverage-prices-topic"
