@@ -17,7 +17,6 @@ import org.springframework.kafka.config.StreamsBuilderFactoryBean
 import org.springframework.kafka.config.StreamsBuilderFactoryBeanConfigurer
 import org.springframework.kafka.config.TopicBuilder
 import org.springframework.kafka.core.KafkaAdmin.NewTopics
-import java.util.*
 
 @Configuration
 @EnableKafka
@@ -29,6 +28,9 @@ class KafkaConfiguration {
         return NewTopics(
             TopicBuilder.name(STOCK_QUOTES_TOPIC).build(),
             TopicBuilder.name(LEVERAGE_PRICES_TOPIC).compact().build(),
+            TopicBuilder.name(AAPL_STOCKS_TOPIC).build(),
+            TopicBuilder.name(GOOGL_STOCKS_TOPIC).build(),
+            TopicBuilder.name(ALL_OTHER_STOCKS_TOPIC).build(),
         )
     }
 
@@ -60,6 +62,9 @@ class KafkaConfiguration {
 // constants for topics
 const val STOCK_QUOTES_TOPIC = "stock-quotes-topic"
 const val LEVERAGE_PRICES_TOPIC = "leverage-prices-topic"
+const val AAPL_STOCKS_TOPIC = "apple-stocks-topic"
+const val GOOGL_STOCKS_TOPIC = "google-stocks-topic"
+const val ALL_OTHER_STOCKS_TOPIC = "all-other-stocks-topic"
 const val LEVERAGE_BY_SYMBOL_TABLE = "leverage-by-symbol-ktable"
 val KAFKA_HOSTS: List<String> = listOf("localhost:9092")
 const val SCHEMA_REGISTRY_URL = "http://localhost:8081"

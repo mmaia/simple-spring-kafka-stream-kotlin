@@ -1,0 +1,11 @@
+{
+  "namespace": "com.maia.springkafkastreamkotlin.repository",
+  "type": "record",
+  "name": "ProcessedQuote",
+  "fields": [
+    { "name": "symbol", "type": "string"},
+    { "name": "tradeValue", "type": "double"},
+    { "name": "tradeTime", "type": ["null", "long"], "default": null},
+    { "name": "leverage", "type": ["null", "double"], "default":  null}
+  ]
+}
