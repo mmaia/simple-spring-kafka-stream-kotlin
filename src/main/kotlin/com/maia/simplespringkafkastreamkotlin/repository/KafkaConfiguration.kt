@@ -17,6 +17,8 @@ import org.springframework.kafka.config.StreamsBuilderFactoryBean
 import org.springframework.kafka.config.StreamsBuilderFactoryBeanConfigurer
 import org.springframework.kafka.config.TopicBuilder
 import org.springframework.kafka.core.KafkaAdmin.NewTopics
+import java.util.*
+import kotlin.collections.HashMap
 
 @Configuration
 @EnableKafka
@@ -31,6 +33,8 @@ class KafkaConfiguration {
             TopicBuilder.name(AAPL_STOCKS_TOPIC).build(),
             TopicBuilder.name(GOOGL_STOCKS_TOPIC).build(),
             TopicBuilder.name(ALL_OTHER_STOCKS_TOPIC).build(),
+            TopicBuilder.name(COUNT_TOTAL_QUOTES_BY_SYMBOL_TOPIC).compact().build(),
+            TopicBuilder.name(COUNT_WINDOW_QUOTES_BY_SYMBOL_TOPIC).build()
         )
     }
 
@@ -59,12 +63,18 @@ class KafkaConfiguration {
     }
 }
 
-// constants for topics
+// constants for topics and global configuration
 const val STOCK_QUOTES_TOPIC = "stock-quotes-topic"
 const val LEVERAGE_PRICES_TOPIC = "leverage-prices-topic"
 const val AAPL_STOCKS_TOPIC = "apple-stocks-topic"
 const val GOOGL_STOCKS_TOPIC = "google-stocks-topic"
 const val ALL_OTHER_STOCKS_TOPIC = "all-other-stocks-topic"
+const val COUNT_TOTAL_QUOTES_BY_SYMBOL_TOPIC = "count-total-by-symbol-topic"
+const val COUNT_WINDOW_QUOTES_BY_SYMBOL_TOPIC = "count-window-by-symbol-topic"
+const val QUOTES_BY_WINDOW_TABLE = "quotes-by-window-table"
 const val LEVERAGE_BY_SYMBOL_TABLE = "leverage-by-symbol-ktable"
-val KAFKA_HOSTS: List<String> = listOf("localhost:9092")
 const val SCHEMA_REGISTRY_URL = "http://localhost:8081"
+val KAFKA_HOSTS: List<String> = listOf("localhost:9092")
+val serdeConfig: MutableMap<String, String> = Collections.singletonMap(
+    AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL
+)

@@ -16,7 +16,7 @@ GET http://localhost:8080/api/leveragePrice/APPL
 GET http://localhost:8080/api/leveragePrice/GOOGL
 
 ###
-GET http://localhost:8080/api/quotes/count/NTFLX?pastMinutes=300
+GET http://localhost:8080/api/quotes/count/APPL?pastMinutes=5
 
 ###
 GET http://localhost:8080/actuator/health

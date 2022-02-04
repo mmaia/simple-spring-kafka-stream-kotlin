@@ -25,17 +25,13 @@ class LeverageStream {
     private val leveragePriceSerde = SpecificAvroSerde<LeveragePrice>()
     private lateinit var leveragePriceView: ReadOnlyKeyValueStore<String, LeveragePrice>
 
-    val serdeConfig: MutableMap<String, String> = Collections.singletonMap(
-        AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL
-    )
-
     @PostConstruct
     fun init() {
         leveragePriceSerde.configure(serdeConfig, false)
     }
 
     @Bean
-    fun afterStart(sbfb: StreamsBuilderFactoryBean): StreamsBuilderFactoryBean.Listener {
+    fun afterStartLeverage(sbfb: StreamsBuilderFactoryBean): StreamsBuilderFactoryBean.Listener {
         val listener: StreamsBuilderFactoryBean.Listener = object : StreamsBuilderFactoryBean.Listener {
             override fun streamsAdded(id: String, streams: KafkaStreams) {
                 leveragePriceView = streams.store<ReadOnlyKeyValueStore<String, LeveragePrice>>(
@@ -46,6 +42,7 @@ class LeverageStream {
                 )
             }
         }
+
         sbfb.addListener(listener)
         return listener
     }
