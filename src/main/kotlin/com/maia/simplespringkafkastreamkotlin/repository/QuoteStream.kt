@@ -40,7 +40,7 @@ class QuoteStream(val leveragepriceGKTable: GlobalKTable<String, LeveragePrice>)
 
     @PostConstruct
     fun init() {
-        quotesPerWindowSerde.configure(serdeConfig, false)
+        quotesPerWindowSerde.configure(serdeConfig(), false)
     }
 
     @Bean

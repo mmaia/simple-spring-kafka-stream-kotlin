@@ -27,7 +27,7 @@ class LeverageStream {
 
     @PostConstruct
     fun init() {
-        leveragePriceSerde.configure(serdeConfig, false)
+        leveragePriceSerde.configure(serdeConfig(), false)
     }
 
     @Bean

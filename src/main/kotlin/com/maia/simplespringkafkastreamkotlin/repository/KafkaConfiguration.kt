@@ -1,5 +1,6 @@
 package com.maia.simplespringkafkastreamkotlin.repository
 
+import io.confluent.kafka.schemaregistry.client.SchemaRegistryClientConfig
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
 import org.apache.kafka.clients.consumer.ConsumerConfig
@@ -50,6 +51,9 @@ class KafkaConfiguration {
         props[StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG] = SpecificAvroSerde::class.java
         props[ConsumerConfig.GROUP_ID_CONFIG] = "stock-quotes-stream-group"
 
+        props[SchemaRegistryClientConfig.BASIC_AUTH_CREDENTIALS_SOURCE] = "USER_INFO"
+        props[SchemaRegistryClientConfig.USER_INFO_CONFIG] = "user:password"
+
         return KafkaStreamsConfiguration(props)
     }
 
@@ -75,6 +79,11 @@ const val QUOTES_BY_WINDOW_TABLE = "quotes-by-window-table"
 const val LEVERAGE_BY_SYMBOL_TABLE = "leverage-by-symbol-table"
 const val SCHEMA_REGISTRY_URL = "http://localhost:8081"
 val KAFKA_HOSTS: List<String> = listOf("localhost:9092")
-val serdeConfig: MutableMap<String, String> = Collections.singletonMap(
-    AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL
-)
+
+fun serdeConfig(): MutableMap<String, String> {
+    val config = HashMap<String, String>()
+    config[AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG] = SCHEMA_REGISTRY_URL
+    config[SchemaRegistryClientConfig.BASIC_AUTH_CREDENTIALS_SOURCE] = "USER_INFO"
+    config[SchemaRegistryClientConfig.USER_INFO_CONFIG] = "user:password"
+    return config
+}

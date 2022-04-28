@@ -11,3 +11,6 @@ spring:
       acks: 0 # fire and forget, no durability guarantees
       properties:
         schema.registry.url: http://localhost:8081
+        basic.auth:
+          credentials.source: "USER_INFO"
+          user.info: "user:password"
